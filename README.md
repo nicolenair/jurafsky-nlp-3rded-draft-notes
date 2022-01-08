@@ -3,4 +3,4 @@ My notes for the book Speech and Language Processing Book by Daniel Jurafsky and
 
 # added chapters
 
-1. [ ] Chapter 21: Coreference Resolution
+1. [x] Chapter 21: Coreference Resolution
