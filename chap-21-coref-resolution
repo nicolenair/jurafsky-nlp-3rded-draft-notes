@@ -1,0 +1,29 @@
+# Chapter 21: Coreference Resolution
+
+## Introduction
+
+### Important Terms
+
++ mentions/referring expressions
++ referent
++ discourse model
++ evoked
++ accessed
++ anaphora
++ antecedent 
++ singleton
++ nesting of coreference mentions
++ main tasks in coreference resolution
++ Winongrad Schema Problems
++ event coreference
++ discourse deixis
+
+## 21.1 Coreference Phenomena: Linguistic Background
+
+### 21.1.1 Types of Referring Expressions
+
++ Indefinite Noun Phrases
++ Definite Noun Phrases
++ Pronouns
++ Demonstrative Pronouns
++ Zero Anaphora
