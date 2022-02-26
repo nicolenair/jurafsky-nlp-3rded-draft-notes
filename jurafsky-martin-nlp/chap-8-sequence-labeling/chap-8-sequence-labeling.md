@@ -218,3 +218,19 @@ Remaining Confusions:
   + so the tagsets for these languages tend to be much larger than English
   + so we will first morphologically analyse the word, and then the annotator will disambiguate between the possible POS tags for the analysed word
   + we can deal with unknown words because morphological parsers can deal with an unknown stem and segment the affixes correctly
+
+# Chapter 8 Exercises
+
+# 8.1
+
+## My answer:
+
+1. Atlanta/NN
+2. dinner/NNS
+3. have/VB
+4. can/VBP
+
+# 8.2
+
+## My answer:
+
