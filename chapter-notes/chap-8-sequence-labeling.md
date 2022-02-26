@@ -194,6 +194,27 @@ Remaining Confusions:
 + labeled data is essential for training and test
 
 ## 8.7.1 Bidirectionality
-+ 
-+ 
++ in Viterbi, we *indirectly* use future tag information, but it would be helpful to *directly* use it
++ can use multiple passes to address this
++ neural models are often bidirectional
 
+## 8.7.2 Rule-based Methods
++ in commercial applications, rules and lists are often used in place of CRF for NER
+    + example: IBM System T specifies declarative constraints for tagging task in a formal query language (using regex, dictionary, semantic constraints etc)
+  + it is also possible to use high precision rules to extract NER at first, and then use that as an input to another ML system
+    + this method was first used for coreference
++  rule-based methods were also used for POS tagging
+  + English Constraint Grammar system
+    +  step 1: morphological analysis + return all POS tag entries for a given word
+    +  step 2: use a large set of constraints to rule out inconsistent POS tags for a word given a sequence 
+
+## 8.7.2 POS Tagging for Morphologically Rich Languages
++ examples; Czech, Hungarian, Turkish
++ productive word formation processes produce a *large vocabulary*
++ large vocabularies --> many unknown words --> performance degradation
++ inflections (masculine, feminine) or (accusative, nominative, genitive) can impact tasks like parsing and coreference resolution
+  + so POS taggers for morphologically rich languages tag case & gender info
+  + so we use a **morphological parse sequence** for such languages instead of single POS tags
+  + so the tagsets for these languages tend to be much larger than English
+  + so we will first morphologically analyse the word, and then the annotator will disambiguate between the possible POS tags for the analysed word
+  + we can deal with unknown words because morphological parsers can deal with an unknown stem and segment the affixes correctly
