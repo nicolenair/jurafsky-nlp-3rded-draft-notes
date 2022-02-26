@@ -57,7 +57,7 @@ The importance of named entity recognition
 + example tagset: Penn Treebank 45-tag set
 
 
-## 8.2 POS Tagging
+# 8.2 POS Tagging
 
 + assign a POS to each word in a text
 + input = sequence of tokenized words, output = tag for each word
@@ -68,9 +68,67 @@ The importance of named entity recognition
   + so as a baseline, we can just choose the most frequent tag
   + most frequent tag baseline has an accuracy of about 92%
 
-## 8.3 Named Entities and Named Entity Tagging
+# 8.3 Named Entities and Named Entity Tagging
 + named entity = anything that can be referred to with a proper name (person, location, organization)
 + named entity recognition task = find spans of texts containing proper names and tag entity type
 + most common entity tags: person, location, organization, geo-political entity
 + however, we often go beyond "named entities" in "named entity tagging" and do things like dates, times
-+ 
++ sometimes in *specific applications* there will be special entities such as proteins, genes
++ there is a **span recognition problem** that is not present in POS tagging, because we are tagging *spans* rather than individual tokens
++ there is **type ambiguity** eg JFK can be a person or an airport
++ the **span recognition problem** is often resolved via BIO/IO/BIOES tagging, where each token is tagged with the entity type AND the position in a span (begin = B, in = I)
+
+# 8.4 HMM POS Tagging
+
+## 8.4.1 Markov Chains
++ Markov assumption: if we want to predict the future, it only depends on the current state
++ components of a Markov chain
+  + Q = set of N states
+  + A = transition probability matrix specifying probability of transitioning from one state to another
+  + $\pi\   = initial probabilities of states
+
+## 8.4.2 The Hidden Markov Model
++ Markov chains can be used directly for observable events
++ But often, the states we are interested in are HIDDEN (eg we cannot directly observe POS tags)
++ We can think of the POS tags as "causing" the words
++ Components of a HMM:
+  + Q = a set of N states
+  + A = transition probability matrix
+  + O = a sequence of T observations, each drawn from vocabulary V
+  + B = a sequence of observation likelihoods/ "emission probabilities" probability of an observation being emitted from a state
+  + $\pi\ = initial probability distribution
++ First order HMM simplifying assumptions:
+  + probability of a state depends only on the previous state
+  + probability of observation i depends only on state i
+
+## 8.4.3 Components of a HMM tagger
++ A transition probabilities and B emission probabilities are the two major components
++ They are estimated using a tagged training corpus
++ a_titj = count(tag i followed by tag j)/count(tag i)
++ b_tjwj = count(tag t which generates word w)/count(tag t)
++ From a Bayesian perspective, we can view a_ij as the prior probability, and b_tw as the likelihood --> if we multiply, we get the unnormalized posterior of the tag at time t
+  + p(t_j) * p(w_j | t_j) = p(t_j | w_j)
+
+## 8.4.4 HMM tagging as decoding
++ Decoding = task of determining the hidden variable sequence, given the sequence of observations
++ Basically repeats the earlier explanation, and provides equations (good for reviewing!)
+
+## 8.4.5 The Viterbi Algorithm
++ summary: 
+  + at each step take the v * a * b where v is the previous state which maximizes v * a * b, a is the transition probability and b is the emission probability
+  + at the termination step, take the maximum probability path *by following backpointers
+
+## 8.4.6 Working through an example
++ basically provides an example of using the Viterbi algorithm to do HMM tagging
+
+
+# 8.5 Conditional Random Fields
++ HMMs are useful but require augmentations
++ Example HMM problems
+  + unknown words
++ Can be considered a discriminative sequence model based on log-linear models
++ basic CRF = linear chain CRF
++ HMMs are generative and used Bayes rule, but CRFs compute the posterior P(tags | words) directly
++  
+
+
