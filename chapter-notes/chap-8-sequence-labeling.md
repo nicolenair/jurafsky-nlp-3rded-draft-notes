@@ -129,6 +129,71 @@ The importance of named entity recognition
 + Can be considered a discriminative sequence model based on log-linear models
 + basic CRF = linear chain CRF
 + HMMs are generative and used Bayes rule, but CRFs compute the posterior P(tags | words) directly
-+  
++ CRFs 
+  + do not compute a tag probability at each time step, instead, only a *log linear function over a set of relevant features* is computed
+  + the features are then aggregated and normalized to produce a global probability over the whole sequence
++ CRF Feature Function
+  +  based on logistic regression
+    + in logistic regression, the feature is f(x, y)
+  + in CRF, the feature function is also f(x, y) BUT x and y are entire sequences
+  + we can have k different feature functions(X, Y) and corresponding weights w_k and then use the weighted sum of these global features in a softmax-like manner
+  + the global feature functions are computed by taking a summation over local features where global = entire sequence, local = one token
+  + features can use:
+    + current output token yi
+    + previous output token yi-1
+    + entire input string x
+    + current position i
+  + the constraint to only depend on yi and yi-1 is what defines a *linear chain crf*
+    + linear chain crf enables the usage of viterbi, forwards-backwards algorithms
+    + if we depend on other output tokens (eg yi-4) then we have to use more complex decoding algorithms
+## 8.5.1 Features in a CRF POS tagger
++ the reason to use a discriminative sequence tagger is that it's easy to incorporate a lot of features. Here are some examples:
+  + example 1: xi = the, yi = determiner
+  + example 2: yi = proper noun, xi+1 = Street, yi-1 = number
++ the system designer decides on features, and then the features are automatically populated using a *feature template* (chapter 5)
++ features which help with unknown words are also helpful
+  + eg *word shape* features which represent letter pattern of the word [lower = x, upper = X, number = d]
+  + prefix features
+  + suffix features
++ REMEMBER that these local/word-level features are not multiplied by weights, they are only multiplied after we have summed across the sequence to get the global feature
+  + so there is always a set of K features with K weights, even if the sequence length differs
 
+
+## 8.5.2 Features of CRF Named Entity Recognizers
++ similar features to POS tagging
++ some other features:
+  + presence in gazeteer
+  + presence in census list
+  + POS tag
+
+## 8.5.3 Inference and Training for CRFs
++ Viterbi can be used for linear chain CRF decoding, due to dependence only on previous output!
++ But the method of filling the N x T lattice is different:
+  + the a transition probabilities and b emission probabilities are replaced
+  + we will instead use the sum of weight_k * feature_k
++ can use the same supervised learning algorithms as logistic regression
++ L1, L2 regularization is important
++ forward-backward algorithm can be used to compute derivatives wrt the loss function
+
+
+
+Remaining Confusions:
++ why is the decoding computation still apparently using local features, rather than global features in CRF
+  + when we loop through T time steps, is this the equivalent of summing over T???
+
+
+
+## 8.6 Evaluation of Named Entity Recognition
++ POS taggers usually use accuracy, but NER models usually use recall, precision & f1
++ To compare f1 of two NER systems, we can use a paired boostrap test or a randomization test (section 4.9)
++ complications due to segmentation portion of NER:
+  +  we train using words, but evaluate using entire entities, so there is a train-test mismatch 
+
+
+# 8.7 Further Details
++ labeled data is essential for training and test
+
+## 8.7.1 Bidirectionality
++ 
++ 
 
